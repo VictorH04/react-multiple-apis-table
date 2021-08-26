@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import Buttons from "./Buttons";
+import List from "./List";
 
 function App() {
+  const [category, setCategory] = useState("users");
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch(
+          `https://jsonplaceholder.typicode.com/${category}`
+        );
+        const listItems = await response.json();
+        setItems(listItems);
+
+        console.log(listItems);
+      } catch (err) {
+        console.log(err.stack);
+      }
+    };
+    fetchItems();
+  }, [category]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Buttons
+        users="users"
+        posts="posts"
+        comments="comments"
+        category={category}
+        setCategory={setCategory}
+      />
+      <List items={items} />
     </div>
   );
 }
