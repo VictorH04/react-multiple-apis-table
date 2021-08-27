@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Buttons from "./Buttons";
-import List from "./List";
+import Table from "./Table";
+import "./index.css";
 
 function App() {
   const [category, setCategory] = useState("users");
@@ -32,7 +33,8 @@ function App() {
         category={category}
         setCategory={setCategory}
       />
-      <List items={items} />
+      {/* <List items={items} /> */}
+      <Table items={items} />
     </div>
   );
 }
